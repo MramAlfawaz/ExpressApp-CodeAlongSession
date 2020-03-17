@@ -41,10 +41,11 @@ app.get("/hello/:message", function(req, res){
 // D -Delete -- delete
 
 let people = [
-    {firstName: 'saad', lastName: 'Iqbal'},
-    {firstName: 'Ebere', lastName: 'Iweala'},
-    {firstName: 'Yasir', lastName: 'Saud'}
-];
+    { firstName: 'maram', lastName: 'Ahmad' , id: 1},
+    { firstName: 'sara', lastName: 'murad' ,id: 2},
+    { firstName: 'abrar', lastName: 'mohsen',id: 3},
+    { firstName: 'amal', lastName: 'yasir',id: 4}
+ ];
 
 // GET API - Read Operation in CRUD -- json
 app.get('/api/people.json', function(req, res){
@@ -68,7 +69,30 @@ app.post('/api/person', function(req, res){
 
 // Homework
 // Please write update API and delete API.
+app.put('/api/people/:id' , function(req, res){
+    let id =parseInt( req.params.id);
+    let updatePeople =req.body;
+    if (people["people" + id] != null){
+          people["people" + id] = updatePeople;
+          console.log(" update successfully \n" + JSON.stringify(people, null , 4))
 
+        res.end("Update successfully \n" + JSON.stringify(updatePeople, null , 4)) 
+    }
+    else {
+        res.end(" Doesn't updated people: \n" + JSON.stringify(updatePeople, null , 4))
+
+    }
+});
+
+app.delete('/api/people/:id' , function(req, res){
+    let deletePeople = people["people" + req.body.id];
+    delete people["people" + req.body.id];
+    
+    console.log("people after delete \n" + JSON.stringify(people, null,4));
+
+    res.end("Deleted people \n" + JSON.stringify(deletePeople, null,4)) ;
+    
+});
 
 // configuration of port
 const port = process.env.PORT || 3000;
